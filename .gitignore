@@ -1,0 +1,12 @@
+cat >> .gitignore <<'EOF'
+.env
+reports/
+*.log
+venv/
+__pycache__/
+.pytest_cache/
+.idea/
+allure-results/
+allure-report/
+*.pyc
+.vscode/
