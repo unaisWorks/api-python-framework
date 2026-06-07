@@ -1,4 +1,6 @@
 from utils.logger import get_logger
+from utils.validator import validate_json
+
 def test_get_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_get_user")
@@ -13,3 +15,8 @@ def test_get_user(client):
     assert response.elapsed.total_seconds() < 3
 
     logger.info("✓ Test passed")
+
+    validate_json(
+        "schemas/user_schema.json",
+        response.json()
+    )
