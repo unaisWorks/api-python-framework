@@ -1,5 +1,6 @@
 from utils.logger import get_logger
-
+import allure
+@allure.title("Successfully deleted User")
 def test_delete_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_delete_user")

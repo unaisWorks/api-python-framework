@@ -1,10 +1,18 @@
 from utils.logger import get_logger
 from utils.validator import validate_json
+import allure
 
+@allure.title("Successfully fetched user")
 def test_get_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_get_user")
     response = client.get_single_user(2)
+
+    allure.attach(
+        response.text,
+        name= "Response Body",
+        attachment_type=allure.attachment_type.JSON
+    )
 
     body = response.json()
 

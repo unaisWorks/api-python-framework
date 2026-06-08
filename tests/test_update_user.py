@@ -1,10 +1,18 @@
 from payloads.update_user_payload import update_user_payload
 from utils.logger import get_logger
+import allure
 
+@allure.title("Successfully updated user")
 def test_update_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_update_user")
     response = client.update_user(2,update_user_payload())
+
+    allure.attach(
+        response.text,
+        name="Response Body",
+        attachment_type=allure.attachment_type.JSON
+    )
 
     assert response.status_code == 200
     body = response.json()

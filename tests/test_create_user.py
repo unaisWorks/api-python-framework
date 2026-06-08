@@ -1,8 +1,8 @@
 from payloads.create_user_payload import create_user_payload
 from utils.logger import get_logger
+import allure
 
-
-
+@allure.title("Create a new user successfully")
 def test_create_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_create_user")
@@ -15,3 +15,4 @@ def test_create_user(client):
     assert body["name"] == payload["name"]
     assert body["job"] == payload["job"]
     logger.info("Test Passed")
+
