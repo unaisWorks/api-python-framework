@@ -3,12 +3,14 @@ from utils.validator import validate_json
 import allure
 import pytest
 
+
 @allure.title("Validate Multiple Users")
 @pytest.mark.parametrize(
     "user_id",
     [1, 2, 3]
 )
-
+@pytest.mark.api
+@pytest.mark.regression
 def test_get_multiple_users(client,user_id):
     logger = get_logger(__name__)
     logger.info(f"Starting test for user_id={user_id}")

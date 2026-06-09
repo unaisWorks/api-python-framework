@@ -1,7 +1,11 @@
 from payloads.create_user_payload import create_user_payload
 from utils.logger import get_logger
 import allure
+import pytest
 
+@pytest.mark.api
+@pytest.mark.regression
+@pytest.mark.smoke
 @allure.title("Create a new user successfully")
 def test_create_user(client):
     logger = get_logger(__name__)

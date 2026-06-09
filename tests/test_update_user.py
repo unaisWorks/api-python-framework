@@ -1,7 +1,10 @@
 from payloads.update_user_payload import update_user_payload
 from utils.logger import get_logger
 import allure
+import pytest
 
+@pytest.mark.api
+@pytest.mark.regression
 @allure.title("Successfully updated user")
 def test_update_user(client):
     logger = get_logger(__name__)

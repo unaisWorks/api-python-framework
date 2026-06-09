@@ -1,5 +1,9 @@
 from utils.logger import get_logger
 import allure
+import pytest
+
+@pytest.mark.api
+@pytest.mark.regression
 @allure.title("Successfully deleted User")
 def test_delete_user(client):
     logger = get_logger(__name__)

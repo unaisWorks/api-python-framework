@@ -3,8 +3,10 @@ from utils.validator import validate_json
 import allure
 import pytest
 
+@pytest.mark.api
+@pytest.mark.regression
+@pytest.mark.smoke
 @allure.title("Successfully fetched user")
-
 def test_get_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_get_user")

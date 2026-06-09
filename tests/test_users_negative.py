@@ -1,5 +1,8 @@
 from utils.logger import get_logger
+import pytest
 
+@pytest.mark.api
+@pytest.mark.regression
 def test_non_existing_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_non_existing_user")

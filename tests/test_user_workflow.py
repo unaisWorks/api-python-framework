@@ -1,5 +1,9 @@
 import allure
 import json
+import pytest
+
+@pytest.mark.api
+@pytest.mark.regression
 @allure.title("Create Update Delete User Workflow")
 def test_user_workflow(client):
 
