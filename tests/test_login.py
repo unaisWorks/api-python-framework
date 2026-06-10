@@ -1,7 +1,10 @@
 from api_clients.auth_client import AuthClient
 import pytest
+import allure
 
 @pytest.mark.api
+@allure.feature("User Management")
+@allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.regression
 @pytest.mark.smoke
 def test_login(client):

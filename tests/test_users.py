@@ -5,6 +5,8 @@ import pytest
 from utils.allure_helper import attach_response
 
 @pytest.mark.api
+@allure.feature("User Management")
+@allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.regression
 @pytest.mark.smoke
 @allure.title("Successfully fetched user")

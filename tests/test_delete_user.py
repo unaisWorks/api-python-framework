@@ -3,6 +3,8 @@ import allure
 import pytest
 
 @pytest.mark.api
+@allure.feature("User Management")
+@allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.regression
 @allure.title("Successfully deleted User")
 def test_delete_user(client):

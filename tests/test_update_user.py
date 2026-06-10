@@ -5,6 +5,8 @@ import pytest
 from utils.allure_helper import attach_response,attach_payload
 
 @pytest.mark.api
+@allure.feature("User Management")
+@allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.regression
 @allure.title("Successfully updated user")
 def test_update_user(client):

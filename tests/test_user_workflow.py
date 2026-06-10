@@ -3,6 +3,8 @@ import json
 import pytest
 
 @pytest.mark.api
+@allure.feature("User Management")
+@allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.regression
 @allure.title("Create Update Delete User Workflow")
 def test_user_workflow(client):
