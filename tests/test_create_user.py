@@ -2,6 +2,7 @@ from payloads.create_user_payload import create_user_payload
 from utils.logger import get_logger
 import allure
 import pytest
+from utils.allure_helper import attach_payload,attach_response
 
 @pytest.mark.api
 @pytest.mark.regression
@@ -10,10 +11,21 @@ import pytest
 def test_create_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_create_user")
+
+
     payload = create_user_payload()
+
+    attach_payload(
+        payload,
+        "Create User Payload"
+    )
     response = client.create_user(payload)
     body = response.json()
-    print(response.text)
+
+    attach_response(
+        response,
+        "Create User Response"
+    )
     assert response.status_code == 201
 
     assert body["name"] == payload["name"]
