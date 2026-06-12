@@ -2,25 +2,48 @@
 
 ## Overview
 
-This is a REST API test automation framework built with Python, Requests, and Pytest.
-It tests the [Reqres](https://reqres.in) public API and covers real-world patterns
-used in professional QA automation — client abstraction, test data generation,
-schema validation, structured logging, and Allure reporting.
+This is a REST API test automation framework built using Python, Requests, and Pytest.
 
-Built as part of my automation learning journey and portfolio.
+The framework uses the ReqRes public API for demonstration purposes and showcases real-world API automation practices used in professional QA and SDET teams, including client abstraction, dynamic test data generation, schema validation, structured logging, environment management, and rich reporting.
+
+Although ReqRes is used as the target API, the framework architecture is designed to be reusable and scalable for real-world REST API testing projects.
+
+This project was built as part of my QA Automation learning journey and portfolio development.
+
+---
 
 ## Tech Stack
 
-| Tool | Purpose |
-|---|---|
-| Python | Core language |
-| Requests | HTTP client |
-| Pytest | Test runner |
-| Allure | Test reporting |
-| Faker | Dynamic test data generation |
-| jsonschema | Response schema validation |
-| python-dotenv | Environment config management |
-| Logging | Request/response logging |
+| Tool           | Purpose                              |
+| -------------- | ------------------------------------ |
+| Python         | Core programming language            |
+| Requests       | HTTP client for API interactions     |
+| Pytest         | Test runner and framework            |
+| Allure         | Rich test reporting                  |
+| Faker          | Dynamic test data generation         |
+| jsonschema     | Response schema validation           |
+| python-dotenv  | Environment configuration management |
+| Logging        | Request and response logging         |
+| GitHub Actions | Continuous Integration (CI/CD)       |
+
+---
+
+## Features
+
+* Full CRUD coverage (GET, POST, PUT, PATCH, DELETE)
+* Positive and negative test scenarios
+* Pagination testing
+* API Client Pattern implementation
+* Session reuse using `requests.Session()`
+* Dynamic test data generation using Faker
+* JSON Schema validation
+* Structured request and response logging
+* Environment configuration using `.env`
+* Allure reporting with rich attachments
+* Pytest markers for test categorization
+* GitHub Actions CI/CD integration
+
+---
 
 ## Project Structure
 
@@ -28,11 +51,11 @@ Built as part of my automation learning journey and portfolio.
 api-python-framework/
 │
 ├── api_clients/
-│   ├── base_client.py        # Shared session, auth headers
-│   └── users_client.py       # All /users API methods
+│   ├── base_client.py
+│   └── users_client.py
 │
 ├── config/
-│   └── config.py             # Loads env variables
+│   └── config.py
 │
 ├── payloads/
 │   ├── create_user_payload.py
@@ -40,97 +63,261 @@ api-python-framework/
 │   └── patch_user_payload.py
 │
 ├── schemas/
-│   └── user_schema.json      # JSON Schema for response validation
+│   └── user_schema.json
 │
 ├── tests/
-│   ├── test_users.py          # GET single user
-│   ├── test_create_user.py    # POST create user
-│   ├── test_update_user.py    # PUT update user
-│   ├── test_delete_user.py    # DELETE user
-│   ├── test_users_negative.py # Negative scenarios
-│   └── test_users_pagination.py # Pagination
+│   ├── test_users.py
+│   ├── test_create_user.py
+│   ├── test_update_user.py
+│   ├── test_delete_user.py
+│   ├── test_users_negative.py
+│   └── test_users_pagination.py
 │
 ├── utils/
-│   ├── allure_helper.py      # Reusable Allure attachment helpers
-│   ├── data_generator.py     # Faker-based user data generator
-│   ├── logger.py             # Console + file logging
-│   └── validator.py          # JSON schema validation wrapper
+│   ├── allure_helper.py
+│   ├── data_generator.py
+│   ├── logger.py
+│   └── validator.py
 │
 ├── reports/
-│   └── logs/                 # Timestamped log files per test run
+│   ├── logs/
+│   └── allure-results/
 │
-├── conftest.py               # Session-scoped client fixture
-├── .env.example              # Environment variable template
+├── conftest.py
+├── .env.example
 ├── requirements.txt
+├── pytest.ini
 └── README.md
+```
 
-Features
+---
 
-Full CRUD coverage — GET, POST, PUT, PATCH, DELETE
-Positive and negative test scenarios
-Pagination testing
-API Client Pattern — BaseClient handles session and auth, UsersClient extends it
-Dynamic test data using Faker
-JSON Schema validation on responses
-Allure reporting with titles, features, severity levels and request/response attachments
-Dual logging — console output and timestamped log file per run
-Environment config via .env file
-Pytest markers — smoke, regression, api
+## Framework Architecture
 
-Setup
+The framework follows the API Client Pattern, similar to the Page Object Model (POM) used in UI automation.
 
-1. Clone the repo
-git clone https://github.com/yourusername/api-python-framework.git
+### UI Automation
+
+```text
+LoginPage
+InventoryPage
+CartPage
+```
+
+### API Automation
+
+```text
+AuthClient
+UsersClient
+ProductsClient
+```
+
+Each client is responsible for interacting with a specific group of endpoints, resulting in cleaner and more maintainable test code.
+
+---
+
+## Session Management
+
+The framework uses `requests.Session()` through the `BaseClient` to:
+
+* Reuse TCP connections
+* Improve execution performance
+* Centralize authentication headers
+* Reduce duplicate code
+* Simplify client maintenance
+
+---
+
+## Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/unaisWorks/api-python-framework.git
 cd api-python-framework
+```
 
-2. Create a virtual environment
+---
+
+### 2. Create a Virtual Environment
+
+#### Mac/Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+#### Windows
+
+```bash
 python -m venv venv
-source venv/bin/activate        # Mac/Linux
-venv\Scripts\activate           # Windows
+venv\Scripts\activate
+```
 
-3. Install dependencies
+---
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-4. Configure environment
+---
+
+### 4. Configure Environment Variables
+
+Copy the example file:
+
+```bash
 cp .env.example .env
-Add your API key to the .env file.
+```
 
-Running Tests
+Update the values:
 
-Run all tests:
+```env
+BASE_URL=https://reqres.in/api
+API_KEY=your_reqres_api_key
+```
+
+---
+
+## Running Tests
+
+### Run All Tests
+
+```bash
 pytest -v
+```
 
-Run by marker:
+### Run Smoke Tests
+
+```bash
 pytest -m smoke
+```
+
+### Run Regression Tests
+
+```bash
 pytest -m regression
+```
+
+### Run API Tests
+
+```bash
 pytest -m api
+```
 
-Run with Allure report:
+---
+
+## Allure Reporting
+
+Generate Allure results:
+
+```bash
 pytest --alluredir=reports/allure-results
+```
+
+Serve the report:
+
+```bash
 allure serve reports/allure-results
-Allure Report
+```
 
-The Allure report shows:
-Test results grouped by feature and severity
-Request payload attached per test
-Response body attached per test
-Step-level visibility into each test
-To use Allure, install the CLI: brew install allure (Mac)
+Install Allure CLI:
 
-Environment Variables
-Variable	Description
-BASE_URL	API base URL
-API_KEY	API key for authentication
-See .env.example for reference.
+### Mac
 
-What Included in this Framework
-How to structure a Python API test framework from scratch
-The API Client Pattern and why it matters for scalability
-How to separate concerns — clients, payloads, utils, tests
-Allure reporting and making reports useful, not just pretty
-Real-world practices like schema validation and environment config
+```bash
+brew install allure
+```
 
-Author
-Mohamed unais
+### Windows
+
+Download and install from the official Allure website.
+
+---
+
+## What the Allure Report Includes
+
+* Test results grouped by feature
+* Severity classifications
+* Request payload attachments
+* Response body attachments
+* Step-level execution visibility
+* Easier failure investigation
+
+---
+
+## CI/CD Pipeline
+
+GitHub Actions is used to automate test execution.
+
+Current capabilities include:
+
+* Running tests on push events
+* Running tests on pull requests
+* Generating Allure results
+* Uploading test artifacts
+* Providing fast feedback on API quality
+
+---
+
+## Environment Variables
+
+| Variable | Description            |
+| -------- | ---------------------- |
+| BASE_URL | Base URL of the API    |
+| API_KEY  | API authentication key |
+
+Refer to `.env.example` for configuration guidance.
+
+---
+
+## Key Concepts Demonstrated
+
+This framework demonstrates:
+
+* Building a scalable API automation framework from scratch
+* Applying the API Client Pattern
+* Separating concerns across clients, payloads, utilities, and tests
+* Managing environments using `.env`
+* Implementing schema validation
+* Generating dynamic test data
+* Producing actionable Allure reports
+* Writing maintainable and reusable automation code
+* Applying industry-standard QA automation practices
+
+---
+
+## Future Enhancements
+
+Planned improvements include:
+
+* Docker support
+* Parallel execution using `pytest-xdist`
+* Retry mechanisms for unstable endpoints
+* OAuth 2.0 authentication flows
+* Database validation
+* Contract testing
+* Performance testing integration
+
+---
+
+## Author
+
+**Mohamed Unais**
+
+LinkedIn:
 https://www.linkedin.com/in/unaisvds/
+
+GitHub:
 https://github.com/unaisWorks
+
+---
+
+### About This Project
+
+This framework represents my transition from UI Automation to API Automation as part of my journey toward becoming an industry-ready QA Automation Engineer/SDET.
+
+It builds upon my previous experience developing Selenium frameworks with Page Object Model, Allure Reporting, Logging, GitHub, and GitHub Actions, while expanding into professional API testing practices used in modern software teams.
