@@ -6,6 +6,8 @@ import allure
 @pytest.mark.api
 @pytest.mark.regression
 @allure.title("Return 404 for non-existing user")
+@allure.feature("User Management")
+@allure.severity(allure.severity_level.MINOR)
 def test_non_existing_user(client):
     logger = get_logger(__name__)
     logger.info("Starting test_non_existing_user")
